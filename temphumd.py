@@ -1,3 +1,4 @@
+#引用套件
 import xmltodict
 import pymysql.cursors
 from datetime import datetime, timedelta
@@ -19,6 +20,7 @@ connection_pool = pymysql.connect(
     autocommit=True
 )
 
+#處理sensor xml資料
 def process_sensor_data(sensor_file, location):
     try:
         # 獲取資料庫連線
@@ -30,6 +32,7 @@ def process_sensor_data(sensor_file, location):
             filename = os.path.basename(sensor_file)
             sensor_ID, _ = os.path.splitext(filename)
             xml_data = xml_file.read()
+            #將資料轉換為 Python 字典
             data_dict = xmltodict.parse(xml_data)
 
         # 提取溫度和濕度資料，並準備插入資料庫的暫存列表
@@ -66,18 +69,19 @@ def process_sensor_data(sensor_file, location):
             insert_query = "INSERT INTO t1 (Datetime, type, value, location, sensor_ID) VALUES (%s, %s, %s, %s, %s)"
             cursor.executemany(insert_query, records_to_insert)
 
-        # 輸出插入時間和檔案名稱
+        #調整資料的時間格式
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+         # 輸出插入時間和檔案名稱
         print(f"Insert time: {current_time}, File: {sensor_file}")
-
+        
+#發生例外情況
     except Exception as error:
         print(f"Error: {error}")
-
+#無論是否發生異常，關閉資料庫游標，減少資料占用
     finally:
-        # 關閉資料庫連線
         if cursor:
             cursor.close()
-
+#主程式
 def main():
     # 儲存 sensor 檔案路徑和相應地點的列表
     sensor_files_list = []
@@ -99,7 +103,7 @@ def main():
             sensor_file_with_extension = sensor_file + ".xml"  # 加上檔案名
             print(sensor)
             
-            #處理 sensor 資料的函數
+            #經查詢取得所有地點後，進行 sensor 資料處理
             process_sensor_data(sensor_file=sensor_file_with_extension, location=location)
 
 #例外情況
@@ -109,6 +113,12 @@ def main():
     except Exception as e:
         print(f"An error occurred: {e}")
         #break
+    
+# 無論是否發生異常，都要關閉資料庫游標，減少資料占用
+    finally:
+        if cursor:
+            cursor.close()
+            
 #執行主程式
 if __name__ == "__main__":
     main()
