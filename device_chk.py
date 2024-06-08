@@ -68,7 +68,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}")
         pass
-# 無論是否發生異常，都要關閉資料庫游標
+# 關閉資料庫游標，減少資料占用
     finally:
         connection_pool.close()  
 #執行主程式
