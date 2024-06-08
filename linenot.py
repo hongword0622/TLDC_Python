@@ -195,7 +195,7 @@ def check_temperature_humidity(location, data_type):
 #例外狀況
     except Exception as e:
         print(f"Error: {e}")
-# 無論是否發生異常，都要關閉資料庫游標，減少資料占用
+# 關閉資料庫游標，減少資料占用
     finally:
         if cursor:
             cursor.close()
