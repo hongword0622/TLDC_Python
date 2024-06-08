@@ -63,7 +63,7 @@ def write_to_database(file_path):
     except Exception as e:
         print("批量插入失敗:", e)
         
-    # 無論是否發生異常，都要關閉資料庫游標
+    # 關閉資料庫游標，減少資料占用
     finally:
         if cursor:
             cursor.close()
