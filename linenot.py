@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 import time
 
-# MySQL Config設定
+#DataBase Config設定
 connection_pool = pymysql.connect(
     host="10.8.1.3",
     user="root",
