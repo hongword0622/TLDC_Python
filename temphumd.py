@@ -114,7 +114,7 @@ def main():
         print(f"An error occurred: {e}")
         #break
     
-# 無論是否發生異常，都要關閉資料庫游標，減少資料占用
+# 關閉資料庫游標，減少資料占用
     finally:
         if cursor:
             cursor.close()
