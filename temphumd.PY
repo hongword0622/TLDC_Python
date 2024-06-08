@@ -8,7 +8,8 @@ import csv
 from lxml import etree
 import xmltodict
 import sys
-# Create a database connection
+
+# 資料庫設定
 connection_pool = pymysql.connect(
     host="localhost",
     user="root",
@@ -17,6 +18,8 @@ connection_pool = pymysql.connect(
     port=3307,
     autocommit=True
 )
+
+#處理溫溼度資料(.xml)
 def process_sensor_data(sensor_file, location):
     try:
         cursor = connection_pool.cursor()
