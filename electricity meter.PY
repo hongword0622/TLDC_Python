@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import numpy as np
 import multiprocessing
 
-# 資料庫連接配置
+#DataBase Config設定
 connection_pool = pymysql.connect(
     host="localhost",
     user="root",
