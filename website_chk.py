@@ -64,7 +64,7 @@ def check_and_update_website_statuses(line_notify_token):
             print("OK")
 
     finally:
-        # 關閉資料庫游標和資料庫
+        #關閉資料庫游標，減少資料占用
         cursor.close()
         cursor1.close()
         connection_pool.close()
